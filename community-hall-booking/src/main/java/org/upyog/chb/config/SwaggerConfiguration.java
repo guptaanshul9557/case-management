@@ -11,13 +11,13 @@ import java.util.List;
 @Configuration
 public class SwaggerConfiguration {
 
-    @Bean
-    public OpenAPI customOpenAPI() {
-        return new OpenAPI()
-                .servers(List.of(new Server().url("/chb-services")))
-                .info(new Info()
-                        .title("Community Hall Booking Service API")
-                        .description("API details of the Community Hall Booking  Service")
-                        .version("2.0"));
-    }
+//    @Bean
+//    public OpenAPI customOpenAPI() {
+//        return new OpenAPI()
+//                .servers(List.of(new Server().url("/chb-services")))
+//                .info(new Info()
+//                        .title("Community Hall Booking Service API")
+//                        .description("API details of the Community Hall Booking  Service")
+//                        .version("2.0"));
+//    }
 }

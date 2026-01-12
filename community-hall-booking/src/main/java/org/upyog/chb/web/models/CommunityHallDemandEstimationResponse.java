@@ -3,7 +3,7 @@ package org.upyog.chb.web.models;
 import java.util.List;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.upyog.chb.web.models.billing.Demand;
 
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ import lombok.Setter;
  */
 @Schema(description = "A Object holds the community halls slot avaialabiltiy details")
 @Valid
-@jakarta.annotation.Generated(value = "org.egov.codegen.SpringBootCodegen", date = "2024-04-19T11:17:29.419+05:30")
+@javax.annotation.Generated(value = "org.egov.codegen.SpringBootCodegen", date = "2024-04-19T11:17:29.419+05:30")
 
 @Getter
 @Setter

@@ -6,7 +6,7 @@
 ### Changed
 - Upgraded Spring Boot from 2.x to 3.x in pom.xml
 - Updated Java version from 8 to 17 in pom.xml
-- Migrated from javax to jakarta namespace dependencies
+- Migrated from javax to javax namespace dependencies
 - Updated egov-services-models to latest LTS version
 - Updated Swagger/OpenAPI to springdoc-openapi v2
 - Migrated from Spring Fox to SpringDoc OpenAPI

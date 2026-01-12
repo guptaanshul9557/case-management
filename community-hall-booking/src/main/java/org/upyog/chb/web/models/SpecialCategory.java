@@ -1,6 +1,6 @@
 package org.upyog.chb.web.models;
 
-import jakarta.validation.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.validation.annotation.Validated;
 
@@ -18,7 +18,7 @@ import lombok.Setter;
  */
 @Schema(description = "Category of applicants for community hall booking")
 @Validated
-@jakarta.annotation.Generated(value = "org.egov.codegen.SpringBootCodegen", date = "2024-04-19T11:17:29.419+05:30")
+@javax.annotation.Generated(value = "org.egov.codegen.SpringBootCodegen", date = "2024-04-19T11:17:29.419+05:30")
 
 @Getter
 @Setter

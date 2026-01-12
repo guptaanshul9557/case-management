@@ -2,7 +2,7 @@ package org.upyog.chb.web.controllers;
 
 import java.util.List;
 
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,7 +31,7 @@ import org.upyog.chb.web.models.billing.Demand;
 
 import io.swagger.v3.oas.annotations.Parameter;
 
-@jakarta.annotation.Generated(value = "org.egov.codegen.SpringBootCodegen", date = "2024-04-19T11:17:29.419+05:30")
+@javax.annotation.Generated(value = "org.egov.codegen.SpringBootCodegen", date = "2024-04-19T11:17:29.419+05:30")
 
 /**
  * This controller class handles API endpoints for the Community Hall Booking module.

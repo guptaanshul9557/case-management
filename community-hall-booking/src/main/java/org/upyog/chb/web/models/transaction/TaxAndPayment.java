@@ -2,7 +2,7 @@ package org.upyog.chb.web.models.transaction;
 
 import lombok.*;
 
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Getter

@@ -3,7 +3,7 @@ package org.upyog.chb.web.models.events;
 import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Validated

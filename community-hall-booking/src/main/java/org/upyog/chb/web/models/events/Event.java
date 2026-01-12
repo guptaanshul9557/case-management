@@ -3,8 +3,8 @@ package org.upyog.chb.web.models.events;
 import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @Validated
 @AllArgsConstructor

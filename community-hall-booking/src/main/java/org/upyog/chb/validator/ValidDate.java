@@ -1,7 +1,6 @@
 package org.upyog.chb.validator;
 
-import jakarta.validation.Constraint;
-import jakarta.validation.Payload;
+import javax.validation.*;
 
 import org.upyog.chb.util.CommunityHallBookingUtil;
 
