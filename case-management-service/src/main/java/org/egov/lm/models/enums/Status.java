@@ -20,7 +20,13 @@ public enum Status {
 	
 	CANCELLED ("CANCELLED"),
 	
-	REJECTED ("REJECTED");
+	REJECTED ("REJECTED"),
+	
+	INITIATED ("INITIATED"),
+	
+	SETTLED ("SETTLED"),
+	
+	CASESCHEDULED ("CASESCHEDULED");
 
 	private String value;
 

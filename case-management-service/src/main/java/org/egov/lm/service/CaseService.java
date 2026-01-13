@@ -54,22 +54,18 @@ public class CaseService {
 	private final SecureRandom random = new SecureRandom();
 
 	public Case fileCase(@Valid CaseRequest caseRequest) {
+	
+		// validate
+		caseValidator.validateCreateRequest(caseRequest);
 		
 		//enrich
 		enrichmentService.enrichCreateCase(caseRequest);
 
-		// validate
-		caseValidator.validateCreateRequest(caseRequest);
-		
-		
-		//
-	
 	
 		if (caseConfiguration.getIsWorkflowEnabled()) {
 			wfService.updateCaseWorkflow(caseRequest);
 		}
 		producer.push(caseConfiguration.getSaveCaseTopic(), caseRequest);
-		//caseRequest.getCases().setWorkflow(null);
 		return caseRequest.getCases();
 	}
 
@@ -82,16 +78,7 @@ public class CaseService {
 			throw new CustomException("EG_LM_CASE_AUDIT_ERROR", "Case Ids are null");
 		}
 
-//		Boolean shouldReturnEmptyList = caseRepository.enrichCriteriaFromUser(criteria, requestInfo);
-//
-//		if (shouldReturnEmptyList)
-//			return Collections.emptyList();
-
 		Set<String> caseIds = criteria.getCaseIds();
-
-//		String userTenant = criteria.getTenantId();
-//		if(criteria.getTenantId() == null)
-//			userTenant = requestInfo.getUserInfo().getTenantId();
 
 		return caseRepository.getAllRegisterdCases(criteria);
 
@@ -103,9 +90,9 @@ public class CaseService {
 		if (caseConfiguration.getIsWorkflowEnabled()) {
 			state = wfService.updateCaseWorkflow(caseRequest);
 		}
-
+		
+		caseRequest.getCases().setStatus(Status.valueOf(state.getApplicationStatus()));
 		producer.push(caseConfiguration.getUpdateCaseTopic(), caseRequest);
-		caseRequest.getCases().setWorkflow(null);
 		return caseRequest.getCases();
 	}
 

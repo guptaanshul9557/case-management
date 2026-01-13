@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.egov.lm.config.CaseConfiguration;
 import org.egov.lm.models.Case;
+import org.egov.lm.models.enums.Status;
 import org.egov.lm.models.workflow.ProcessInstanceRequest;
 import org.egov.lm.models.workflow.ProcessInstanceResponse;
 import org.egov.lm.models.workflow.State;
@@ -56,15 +57,8 @@ public class WorkflowService {
           Case cases = request.getCases();
 		
 		ProcessInstanceRequest workflowReq = caseUtil.initiateCaseWorkFlow(request);
-		State state = callWorkFlow(workflowReq);
-		
-//		if (state.getApplicationStatus().equalsIgnoreCase(configs.getWfStatusActive()) && property.getPropertyId() == null) {
-//			
-//			String pId = utils.getIdList(request.getRequestInfo(), property.getTenantId(), configs.getPropertyIdGenName(), configs.getPropertyIdGenFormat(), 1).get(0);
-//			request.getProperty().setPropertyId(pId);
-//		}
-		
-//		request.getProperty().setStatus(Status.fromValue(state.getApplicationStatus()));
+		State state = callWorkFlow(workflowReq);		
+		request.getCases().setStatus(Status.fromValue(state.getApplicationStatus()));
 		request.getCases().getWorkflow().setState(state);
 		return state;
 

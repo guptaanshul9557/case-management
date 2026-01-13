@@ -41,7 +41,6 @@ public class EnrichmentService {
 			if (null == doc.getStatus())
 				doc.setStatus(Status.ACTIVE);
 		});
-
 		caseRequest.getCases().setAuditDetails(auditDetails);
 
 	}
@@ -53,8 +52,9 @@ public class EnrichmentService {
 		AuditDetails auditDetails = caseUtil.getAuditDetails(requestInfo.getUserInfo().getUuid().toString(), false);
 		cases.getAdvocates().forEach(advocate -> advocate.setAdvocateId(UUID.randomUUID().toString()));
 
-		if(caseRequest.getCases().getWorkflow().getAction().equalsIgnoreCase("ALLOCATE_ADVICATE"))
+		if(caseRequest.getCases().getWorkflow().getAction().equalsIgnoreCase("ALLOCATE_ADVOCATE"))
 		cases.getJudgement().setJudgementId(UUID.randomUUID().toString());
+	
 
 		cases.setAuditDetails(auditDetails);
 	}
