@@ -124,7 +124,7 @@
         <!-- SpringDoc OpenAPI for Spring Boot 3.x -->
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <artifactId>springdoc-openapi-ui</artifactId>
             <version>1.6.15</version>
         </dependency>
 
