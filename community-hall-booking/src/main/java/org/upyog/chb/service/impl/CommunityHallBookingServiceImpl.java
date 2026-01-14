@@ -180,7 +180,7 @@ public class CommunityHallBookingServiceImpl implements CommunityHallBookingServ
 		if(CollectionUtils.isEmpty(bookingDetails)) {
 			return bookingDetails;
 		}
-		bookingDetails = encryptionService.decryptObject(bookingDetails, info);
+//		bookingDetails = encryptionService.decryptObject(bookingDetails, info);
 		
 		return bookingDetails;
 	}
