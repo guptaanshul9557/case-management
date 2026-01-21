@@ -83,45 +83,43 @@ public class CaseRowMapper implements ResultSetExtractor<List<Case>> {
 
         Advocate advocate = Advocate.builder()
                 .advocateId(advocateId)
-                .name(rs.getString("name"))
-                .email(rs.getString("email"))
-                .mobileNumber(rs.getString("mobilenumber"))
-                .role(rs.getString("role"))
+                .name(rs.getString("advocate_name"))
+                .role(rs.getString("advocate_role"))
                 .build();
 
         agg.addAdvocate(advocate);
     }
 
     private void addPetitioner(ResultSet rs, CaseAggregate agg) throws SQLException {
-        String petitionerId = rs.getString("petitionerid");
+        String petitionerId = rs.getString("petitioner_id");
         if (petitionerId == null) return;
 
         Petitioner petitioner = Petitioner.builder()
                 .petitionerId(petitionerId)
-                .name(rs.getString("name"))
-                .mobileNumber(rs.getString("mobilenumber"))
-                .email(rs.getString("email"))
+                .name(rs.getString("petitioner_name"))
+                .mobileNumber(rs.getString("petitioner_mobile"))
+                .email(rs.getString("petitioner_email"))
                 .build();
 
         agg.addPetitioner(petitioner);
     }
 
     private void addRespondent(ResultSet rs, CaseAggregate agg) throws SQLException {
-        String respondentId = rs.getString("respondentid");
+        String respondentId = rs.getString("respondent_id");
         if (respondentId == null) return;
 
         Respondent respondent = Respondent.builder()
                 .respondentId(respondentId)
-                .name(rs.getString("name"))
-                .mobileNumber(rs.getString("mobilenumber"))
-                .email(rs.getString("email"))
+                .name(rs.getString("respondent_name"))
+                .mobileNumber(rs.getString("respondent_mobile"))
+                .email(rs.getString("respondent_email"))
                 .build();
 
         agg.addRespondent(respondent);
     }
 
     private void addDocument(ResultSet rs, CaseAggregate agg) throws SQLException {
-        String documentId = rs.getString("id");
+        String documentId = rs.getString("document_id");
         if (documentId == null) return;
 
         Document document = Document.builder()

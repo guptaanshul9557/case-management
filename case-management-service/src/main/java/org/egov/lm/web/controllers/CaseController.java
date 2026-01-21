@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Controller
 @RequestMapping("/case")
 public class CaseController {
@@ -65,12 +67,13 @@ public class CaseController {
 	@PostMapping("/_search")
 	public ResponseEntity<CaseResponse> search(@Valid @RequestBody RequestInfoWrapper requestInfoWrapper,
 			@Valid @ModelAttribute CaseCriteria caseCriteria) {
-		
+		Integer count = 0;
 		caseValidator.valildateCaseCriteria(caseCriteria,requestInfoWrapper.getRequestInfo());
-		List<Case> cases = caseService.searchCases(caseCriteria,requestInfoWrapper.getRequestInfo());
+		List<Case> cases = caseService.searchCases(caseCriteria);
+		count = caseService.getCaseCount(caseCriteria);
 		CaseResponse response = CaseResponse.builder().cases(cases).responseInfo(
 				responseInfoFactory.createResponseInfoFromRequestInfo(requestInfoWrapper.getRequestInfo(), true))
-				.build();
+				.count(count).build();
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 

@@ -219,9 +219,7 @@ public class CaseValidator {
 		if (StringUtils.isEmpty(caseCriteria.getTenantId())) {
 			throw new CustomException("EG_LM_INVALID_SEARCH", " TenantId is mandatory for search ");
         }
-        if(StringUtils.isEmpty(caseCriteria.getCaseIds())) {
-        	throw new CustomException("EG_LM_INVALID_SEARCH", " CaseId is mandatory for search ");
-        }
+      
 		
 	}
 	

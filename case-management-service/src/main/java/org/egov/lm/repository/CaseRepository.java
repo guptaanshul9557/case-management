@@ -62,4 +62,11 @@ public class CaseRepository {
 		return jdbcTemplate.query(query, preparedStmtList.toArray(), advocateRowMapper);
 	}
 
+	public Integer getCaseCount(@Valid CaseCriteria caseCriteria) {
+		List<Object> preparedStmtList = new ArrayList<>();
+		String query = queryBuilder.buildTenantCaseCountQuery(caseCriteria,preparedStmtList);
+		Integer count =  jdbcTemplate.queryForObject(query, preparedStmtList.toArray(), Integer.class);
+		return count;
+	}
+
 }

@@ -3,6 +3,8 @@ package org.egov.lm.repository.builder;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.Valid;
+
 import org.egov.lm.config.CaseConfiguration;
 import org.egov.lm.models.CaseCriteria;
 import org.springframework.stereotype.Component;
@@ -55,8 +57,9 @@ public class CaseQueryBuilder {
 			+ LEFT_JOIN +"eg_lm_case_respondent res ON res.caseid = c.caseid"
 			+ LEFT_JOIN +"eg_lm_case_document doc ON doc.caseid = c.caseid "
 			+ LEFT_JOIN +"eg_lm_judgement j ON j.caseid = c.caseid ";
-
-	/*
+	
+	private static final String TOTAL_COUNT = "SELECT COUNT(*) FROM eg_lm_case WHERE tenantid = ?"; 
+    /*
 	 * PUBLIC METHODS
 	 */
 
@@ -189,6 +192,11 @@ public class CaseQueryBuilder {
 
 	private String createPlaceholders(int count) {
 		return String.join(COMMA, java.util.Collections.nCopies(count, "?"));
+	}
+
+	public String buildTenantCaseCountQuery(@Valid CaseCriteria caseCriteria, List<Object> preparedStmtList) {
+		preparedStmtList.add(caseCriteria.getTenantId());
+	    return TOTAL_COUNT;
 	}
 
 }
