@@ -33,7 +33,7 @@ public class EnrichmentService {
 		AuditDetails auditDetails = caseUtil.getAuditDetails(requestInfo.getUserInfo().getUuid().toString(), true);
 		caseRequest.getCases().setId(UUID.randomUUID().toString());
 		setIdgenId(caseRequest);
-		caseRequest.getCases().setStatus(Status.REGISTERED);
+		//caseRequest.getCases().setStatus(Status.REGISTERED);
 		List<Petitioner> petitioners = caseRequest.getCases().getPetitioners();
 		petitioners.forEach(petitioner -> petitioner.setPetitionerId(UUID.randomUUID().toString()));
 
