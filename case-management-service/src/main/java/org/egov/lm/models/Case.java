@@ -20,7 +20,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 @Setter
 @ToString
@@ -30,7 +29,9 @@ import lombok.ToString;
 public class Case {
 
 	/* -------------------- Mandatory Identifiers -------------------- */
-
+	@JsonProperty("id")
+	private String id;
+	
 	@JsonProperty("caseId")
 	private String caseId;
 

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.egov.common.contract.request.RequestInfo;
+import org.egov.lm.config.CaseConfiguration;
 import org.egov.lm.models.AuditDetails;
 import org.egov.lm.models.Case;
 import org.egov.lm.models.Judgement;
@@ -21,15 +22,18 @@ public class EnrichmentService {
 
 	@Autowired
 	private CaseUtil caseUtil;
+	
+	@Autowired
+	private CaseConfiguration config;
 
 	// Adding UUID to case,petitioners,respondents and document
 	public void enrichCreateCase(CaseRequest caseRequest) {
 		RequestInfo requestInfo = caseRequest.getRequestInfo();
 
 		AuditDetails auditDetails = caseUtil.getAuditDetails(requestInfo.getUserInfo().getUuid().toString(), true);
-
-		caseRequest.getCases().setCaseId(UUID.randomUUID().toString());
-
+		caseRequest.getCases().setId(UUID.randomUUID().toString());
+		setIdgenId(caseRequest);
+		//caseRequest.getCases().setStatus(Status.REGISTERED);
 		List<Petitioner> petitioners = caseRequest.getCases().getPetitioners();
 		petitioners.forEach(petitioner -> petitioner.setPetitionerId(UUID.randomUUID().toString()));
 
@@ -43,6 +47,16 @@ public class EnrichmentService {
 		});
 		caseRequest.getCases().setAuditDetails(auditDetails);
 
+	}
+
+	private void setIdgenId(CaseRequest caseRequest) {
+		Case cases = caseRequest.getCases();
+		RequestInfo requestInfo = caseRequest.getRequestInfo();
+		String tenantId = cases.getTenantId();
+		
+		String CaseId = caseUtil.getIdList(requestInfo, tenantId, config.getCaseIdGenName(), config.getCaseIdGenFormat(), 1).get(0);
+
+		cases.setCaseId(CaseId);
 	}
 
 	public void enrichUpdateCase(CaseRequest caseRequest) {

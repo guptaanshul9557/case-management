@@ -3,6 +3,8 @@ package org.egov.lm.repository.builder;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.Valid;
+
 import org.egov.lm.config.CaseConfiguration;
 import org.egov.lm.models.CaseCriteria;
 import org.springframework.stereotype.Component;
@@ -36,7 +38,7 @@ public class CaseQueryBuilder {
 	 * FULL DATA FETCH QUERY
 	 */
 	private static final String CASE_DETAILS_QUERY = "SELECT "
-			+ " c.caseid, c.tenantid, c.casetype, c.casecategory, c.title, c.description, "
+			+ "c.id, c.caseid, c.tenantid, c.casetype, c.casecategory, c.title, c.description, "
 			+ " c.department, c.courttype, c.courtname, c.nexthearingdate, c.status, "
 			+ " c.createdby, c.createdtime, c.lastmodifiedby, c.lastmodifiedtime, c.additionaldetails, " +
 
@@ -44,9 +46,9 @@ public class CaseQueryBuilder {
 
 			" j.judgementid AS judgementid, " + " j.remark AS judgement_remark, " + " j.orderdetail AS orderdetail, " +
 
-			" pet.petitionerid AS petitioner_id, pet.name AS petitioner_name, pet.mobilenumber AS petitioner_mobile, " +
+			" pet.petitionerid AS petitioner_id, pet.name AS petitioner_name, pet.mobilenumber AS petitioner_mobile,pet.email as petitioner_email, " +
 
-			" res.respondentid AS respondent_id, res.name AS respondent_name, res.mobilenumber AS respondent_mobile, " +
+			" res.respondentid AS respondent_id, res.name AS respondent_name, res.mobilenumber AS respondent_mobile, res.email as respondent_email," +
 
 			" doc.id AS document_id, doc.documenttype, doc.filestoreid, doc.documentuid " +
 
@@ -55,8 +57,9 @@ public class CaseQueryBuilder {
 			+ LEFT_JOIN +"eg_lm_case_respondent res ON res.caseid = c.caseid"
 			+ LEFT_JOIN +"eg_lm_case_document doc ON doc.caseid = c.caseid "
 			+ LEFT_JOIN +"eg_lm_judgement j ON j.caseid = c.caseid ";
-
-	/*
+	
+	private static final String TOTAL_COUNT = "SELECT COUNT(*) FROM eg_lm_case WHERE tenantid = ?"; 
+    /*
 	 * PUBLIC METHODS
 	 */
 
@@ -189,6 +192,11 @@ public class CaseQueryBuilder {
 
 	private String createPlaceholders(int count) {
 		return String.join(COMMA, java.util.Collections.nCopies(count, "?"));
+	}
+
+	public String buildTenantCaseCountQuery(@Valid CaseCriteria caseCriteria, List<Object> preparedStmtList) {
+		preparedStmtList.add(caseCriteria.getTenantId());
+	    return TOTAL_COUNT;
 	}
 
 }

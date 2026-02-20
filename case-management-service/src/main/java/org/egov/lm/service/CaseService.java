@@ -1,6 +1,5 @@
 package org.egov.lm.service;
 
-
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -44,24 +43,21 @@ public class CaseService {
 
 	@Autowired
 	private WorkflowService wfService;
-	
+
 	@Autowired
 	private EnrichmentService enrichmentService;
-	
+
 	@Autowired
 	private CaseValidator caseValidator;
 
-	private final SecureRandom random = new SecureRandom();
-
 	public Case fileCase(@Valid CaseRequest caseRequest) {
-	
+
 		// validate
 		caseValidator.validateCreateRequest(caseRequest);
-		
-		//enrich
+
+		// enrich
 		enrichmentService.enrichCreateCase(caseRequest);
 
-	
 		if (caseConfiguration.getIsWorkflowEnabled()) {
 			wfService.updateCaseWorkflow(caseRequest);
 		}
@@ -69,16 +65,12 @@ public class CaseService {
 		return caseRequest.getCases();
 	}
 
-	public List<Case> searchCases(@Valid CaseCriteria criteria, RequestInfo requestInfo) {
-
-		List<Case> cases = new ArrayList<>();
+	public List<Case> searchCases(@Valid CaseCriteria criteria) {
 
 		if (criteria.isAudit() && (CollectionUtils.isEmpty(criteria.getCaseIds()))) {
 
 			throw new CustomException("EG_LM_CASE_AUDIT_ERROR", "Case Ids are null");
 		}
-
-		Set<String> caseIds = criteria.getCaseIds();
 
 		return caseRepository.getAllRegisterdCases(criteria);
 
@@ -90,12 +82,14 @@ public class CaseService {
 		if (caseConfiguration.getIsWorkflowEnabled()) {
 			state = wfService.updateCaseWorkflow(caseRequest);
 		}
-		
-		caseRequest.getCases().setStatus(Status.valueOf(state.getApplicationStatus()));
+
 		producer.push(caseConfiguration.getUpdateCaseTopic(), caseRequest);
 		return caseRequest.getCases();
 	}
 
-	
+	public Integer getCaseCount(@Valid CaseCriteria caseCriteria) {
+		Integer count = caseRepository.getCaseCount(caseCriteria);
+		return count;
+	}
 
 }

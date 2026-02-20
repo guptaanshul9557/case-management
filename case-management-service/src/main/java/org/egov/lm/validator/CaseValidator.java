@@ -4,7 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
+import org.egov.common.contract.request.RequestInfo;
 import org.egov.lm.models.Advocate;
+import org.egov.lm.models.CaseCriteria;
 import org.egov.lm.models.Document;
 import org.egov.lm.models.Petitioner;
 import org.egov.lm.models.Respondent;
@@ -210,5 +214,13 @@ public class CaseValidator {
         	}
         }
     }
+
+	public void valildateCaseCriteria(@Valid CaseCriteria caseCriteria, RequestInfo requestInfo) {
+		if (StringUtils.isEmpty(caseCriteria.getTenantId())) {
+			throw new CustomException("EG_LM_INVALID_SEARCH", " TenantId is mandatory for search ");
+        }
+      
+		
+	}
 	
 }

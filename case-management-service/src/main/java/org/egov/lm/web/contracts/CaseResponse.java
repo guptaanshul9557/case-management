@@ -21,11 +21,14 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 public class CaseResponse {
-	
+
 	@JsonProperty("ResponseInfo")
-	  private ResponseInfo responseInfo;
-	
+	private ResponseInfo responseInfo;
+
 	@JsonProperty("Cases")
-	  private List<Case> cases;
+	private List<Case> cases;
+
+	@JsonProperty("count")
+	private Integer count;
 
 }

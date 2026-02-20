@@ -10,6 +10,7 @@ import org.egov.lm.models.Case;
 import org.egov.lm.models.CaseCriteria;
 import org.egov.lm.service.CaseService;
 import org.egov.lm.util.ResponseInfoFactory;
+import org.egov.lm.validator.CaseValidator;
 import org.egov.lm.web.contracts.CaseRequest;
 import org.egov.lm.web.contracts.CaseResponse;
 import org.egov.lm.web.contracts.RequestInfoWrapper;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Controller
 @RequestMapping("/case")
 public class CaseController {
@@ -31,6 +34,9 @@ public class CaseController {
 
 	@Autowired
 	private ResponseInfoFactory responseInfoFactory;
+	
+	@Autowired
+	private CaseValidator caseValidator;
 
 
 	@PostMapping("/_create")
@@ -61,12 +67,13 @@ public class CaseController {
 	@PostMapping("/_search")
 	public ResponseEntity<CaseResponse> search(@Valid @RequestBody RequestInfoWrapper requestInfoWrapper,
 			@Valid @ModelAttribute CaseCriteria caseCriteria) {
-		
-//		propertyValidator.validatePropertyCriteria(caseCriteria, requestInfoWrapper.getRequestInfo());
-		List<Case> cases = caseService.searchCases(caseCriteria,requestInfoWrapper.getRequestInfo());
+		Integer count = 0;
+		caseValidator.valildateCaseCriteria(caseCriteria,requestInfoWrapper.getRequestInfo());
+		List<Case> cases = caseService.searchCases(caseCriteria);
+		count = caseService.getCaseCount(caseCriteria);
 		CaseResponse response = CaseResponse.builder().cases(cases).responseInfo(
 				responseInfoFactory.createResponseInfoFromRequestInfo(requestInfoWrapper.getRequestInfo(), true))
-				.build();
+				.count(count).build();
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 

@@ -56,6 +56,7 @@ public class CaseRowMapper implements ResultSetExtractor<List<Case>> {
     private Case buildCase(ResultSet rs) {
         try {
             return Case.builder()
+            		.id(rs.getString("id"))
                     .caseId(rs.getString("caseid"))
                     .tenantId(rs.getString("tenantid"))
                     .caseType(rs.getString("casetype"))
@@ -97,6 +98,7 @@ public class CaseRowMapper implements ResultSetExtractor<List<Case>> {
                 .petitionerId(petitionerId)
                 .name(rs.getString("petitioner_name"))
                 .mobileNumber(rs.getString("petitioner_mobile"))
+                .email(rs.getString("petitioner_email"))
                 .build();
 
         agg.addPetitioner(petitioner);
@@ -110,6 +112,7 @@ public class CaseRowMapper implements ResultSetExtractor<List<Case>> {
                 .respondentId(respondentId)
                 .name(rs.getString("respondent_name"))
                 .mobileNumber(rs.getString("respondent_mobile"))
+                .email(rs.getString("respondent_email"))
                 .build();
 
         agg.addRespondent(respondent);

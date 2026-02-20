@@ -78,5 +78,11 @@ public class CaseConfiguration {
 
     @Value("${egov.idgen.path}")
     private String idGenPath;
+    
+    @Value("${egov.idgen.lmid.name}")
+    private String caseIdGenName;
+
+    @Value("${egov.idgen.lmid.format}")
+    private String caseIdGenFormat;
 
 }
